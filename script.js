@@ -6,7 +6,11 @@
  **************************************************************
  **************************************************************/
 
-const HTML_OUTPUT = document.getElementById("databaseOutput");
+const HTML_OUTPUT = document.getElementById('databaseOutput');
+const readListenerOutput = document.getElementById('readListenerOutput');
+var readListenerEnable = false;
+
+readListenerOutput.textContent = 'Automatic read disabled';
 
 /**************************************************************/
 // helloWorld()
@@ -58,14 +62,81 @@ function readMessage(){
 /**************************************************************/
 // 
 /**************************************************************/
+function readMessageSafe(){
+	console.log("Running readMessageSafe()")
+	firebase.database().ref('/').child('message').once('value', displayReadMessageSafe, readError);
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
 function displayReadMessage(message){
+	console.log('Running displayReadMessage(), the message is ' + message.val());
+	HTML_OUTPUT.style.color = 'black';
+	HTML_OUTPUT.innerHTML = message.val();
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function displayReadMessageSafe(message){
 	if (message.val() == null) {
 		console.log('An error occured when trying to read from the database.');
 		HTML_OUTPUT.style.color = 'red';
 		HTML_OUTPUT.innerHTML = 'An error occured when trying to read from the database.';
 	} else {
-		console.log('Running displayReadMessage(), the message is ' + message.val());
+		console.log('Running displayReadMessageSafe(), the message is ' + message.val());
 		HTML_OUTPUT.style.color = 'black';
 		HTML_OUTPUT.innerHTML = message.val();
+	}
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function readError(error){
+	console.log('An error occured, see the following:');
+	console.error(error);
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function toggleReadListener() {
+	console.log("Running toggleReadListener()")
+	if (readListenerEnable == true) {
+		readListenerEnable = false;
+		readListenerOutput.textContent = 'Automatic read disabled';
+		console.log("Automatic read disabled");
+	} else {
+		readListenerEnable = true;
+		readListenerOutput.textContent = 'Automatic read enabled';
+		console.log("Automatic read enabled");
+	}
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function readListenerInitialise() {
+	console.log("Running readListenerInitialise()")
+	firebase.database().ref('/').child('message').on('value', readListener);
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function readListener() {
+	if (readListenerEnable == true) {
+		console.log("ReadListenerEnabled is true, attempting to read database");
+		displayReadMessageSafe();
+	} else {
+		console.log("ReadListenerEnabled is false, database was updated but not displayed");
 	}
 }

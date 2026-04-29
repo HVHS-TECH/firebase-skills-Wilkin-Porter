@@ -37,11 +37,15 @@
   <button onclick="helloWorld()">Hello world</button>
   <button onclick="goodbyeWorld()">Goodbye world</button>
   <button onclick="readMessage()">Read Database Message</button>
+  <button onclick="readMessageSafe()">Safe Read Database Message</button>
+  <button onclick="toggleReadListener()">Toggle Automatic Message Updating</button>
+
+  <p id="readListenerOutput"></p>
 
   <h2>Output</h2>
   <div id="databaseOutput"></div>
 
-  <script src="script.js"></script>
+  <script src="script.js" onload="readListenerInitialise()"></script>
 
 </body>
 
