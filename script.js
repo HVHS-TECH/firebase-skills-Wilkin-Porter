@@ -132,11 +132,74 @@ function readListenerInitialise() {
 /**************************************************************/
 // 
 /**************************************************************/
-function readListener() {
+function readListener(message) {
 	if (readListenerEnable == true) {
-		console.log("ReadListenerEnabled is true, attempting to read database");
-		displayReadMessageSafe();
+		console.log("ReadListenerEnabled is true / enabled, attempting to read database");
+		displayReadMessageSafe(message);
 	} else {
-		console.log("ReadListenerEnabled is false, database was updated but not displayed");
+		console.log("ReadListenerEnabled is false / disabled, database was updated but not displayed");
 	}
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function createHighScoreTable() {
+	console.log("createHighScoreTable")
+	firebase.database().ref('/highScoreTable/').set(
+    {
+		usersByID: {
+			1: {
+				username: "coolguy4",
+				currentScore: 12,
+				highScore: 31,
+			},
+
+			2: {
+				username: "alex619",
+				currentScore: 3,
+				highScore: 102,
+			},
+
+			3: {
+				username: "__mrbell__",
+				currentScore: 1,
+				highScore: 2,
+			},
+
+			4: {
+				username: "coneil704",
+				currentScore: 305,
+				highScore: 436,
+			}
+		}
+	}
+	)
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function addUserToHighScoreTable() {
+	var usernameToAdd = prompt("Enter player name to add");
+	if (usernameToAdd == null) {
+		return;
+	}
+	var currentScoreToAdd = prompt("Enter player's current score");
+	if (currentScoreToAdd == null) {
+		return;
+	}
+	var highScoreToAdd = prompt("Enter player's high score");
+	if (highScoreToAdd == null) {
+		return;
+	}
+	firebase.database().ref('/highScoreTable/usersByID/5').set(
+    {	
+		username: usernameToAdd,
+		currentScore: Number(currentScoreToAdd),
+		highScore: Number(highScoreToAdd),
+	}
+	)
 }
