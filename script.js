@@ -203,3 +203,12 @@ function addUserToHighScoreTable() {
 	}
 	)
 }
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function readHighScoreTable(userToRead) {
+	console.log("readHighScoreTable()")
+	firebase.database().ref('/highScoreTable/usersByID/' + userToRead.toString()).child('highScore').once('value', displayReadMessageSafe, readError);
+}
