@@ -8,6 +8,7 @@
 
 const HTML_OUTPUT = document.getElementById('databaseOutput');
 const readListenerOutput = document.getElementById('readListenerOutput');
+const highScoreUserListenerOutput = document.getElementById('highScoreUserListenerOutput');
 var readListenerEnable = false;
 
 readListenerOutput.textContent = 'Automatic read disabled';
@@ -23,7 +24,7 @@ readListenerOutput.textContent = 'Automatic read disabled';
 /**************************************************************/
 function helloWorld(){
 	console.log("Running helloWorld()")
-	firebase.database().ref('/').set(
+	firebase.database().ref('/').update(
     {
 		message: 'Kia Ora!'
 	}
@@ -42,7 +43,7 @@ function helloWorld(){
 /**************************************************************/
 function goodbyeWorld(){
 	console.log("Running goodbyeWorld()")
-	firebase.database().ref('/').set(
+	firebase.database().ref('/').update(
     {
       	message: 'Ki kite ano!'
     }
@@ -123,9 +124,10 @@ function toggleReadListener() {
 /**************************************************************/
 // 
 /**************************************************************/
-function readListenerInitialise() {
-	console.log("Running readListenerInitialise()")
+function initialise() {
+	console.log("initialise()")
 	firebase.database().ref('/').child('message').on('value', readListener);
+	firebase.database().ref('/highScoreTable/').child("usersByID").on('value', highScoreUserListener);
 }
 
 
@@ -183,6 +185,22 @@ function createHighScoreTable() {
 // 
 /**************************************************************/
 function addUserToHighScoreTable() {
+	firebase.database().ref('/highScoreTable/').child("usersByID").once('value', checkTableLength);
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function checkTableLength(object) {
+	writeUserToTable(Object.keys(object.val()).length)
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function writeUserToTable(length) {
 	var usernameToAdd = prompt("Enter player name to add");
 	if (usernameToAdd == null) {
 		return;
@@ -195,7 +213,8 @@ function addUserToHighScoreTable() {
 	if (highScoreToAdd == null) {
 		return;
 	}
-	firebase.database().ref('/highScoreTable/usersByID/5').set(
+
+	firebase.database().ref('/highScoreTable/usersByID/' + length + 1).set(
     {	
 		username: usernameToAdd,
 		currentScore: Number(currentScoreToAdd),
@@ -210,5 +229,33 @@ function addUserToHighScoreTable() {
 /**************************************************************/
 function readHighScoreTable(userToRead) {
 	console.log("readHighScoreTable()")
-	firebase.database().ref('/highScoreTable/usersByID/' + userToRead.toString()).child('highScore').once('value', displayReadMessageSafe, readError);
+	firebase.database().ref('/highScoreTable/usersByID/').child(userToRead).once('value', displayHighScoreSafe, readError);
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function displayHighScoreSafe(message) {
+	if (message.val() == null) {
+		console.log('An error occured when trying to read from the database.');
+		HTML_OUTPUT.style.color = 'red';
+		HTML_OUTPUT.innerHTML = 'An error occured when trying to read from the database.';
+	} else {
+		console.log('Running displayReadMessageSafe(), the message is ' + message.val());
+		HTML_OUTPUT.style.color = 'black';
+		HTML_OUTPUT.innerHTML = 'User ' + message.val()["username"] + ' got a score of ' + message.val()["currentScore"] + '. Their high score is ' + message.val()["highScore"];
+	}
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function highScoreUserListener(object) {
+	for (var i; i < Object.keys(object.val()).length + 1; i++) {
+		//object user[highscorey thing]
+		// check if higher, recored highest user foirst
+		// ******************************************************************************************************************************* do tsomethiungn eher
+	}
 }
