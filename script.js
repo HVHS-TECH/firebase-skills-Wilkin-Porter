@@ -214,7 +214,7 @@ function writeUserToTable(length) {
 		return;
 	}
 
-	firebase.database().ref('/highScoreTable/usersByID/' + length + 1).set(
+	firebase.database().ref('/highScoreTable/usersByID/' + (length + 1)).set(
     {	
 		username: usernameToAdd,
 		currentScore: Number(currentScoreToAdd),
@@ -250,12 +250,28 @@ function displayHighScoreSafe(message) {
 
 
 /**************************************************************/
-// 
+// usersByID/...
 /**************************************************************/
 function highScoreUserListener(object) {
-	for (var i; i < Object.keys(object.val()).length + 1; i++) {
-		//object user[highscorey thing]
-		// check if higher, recored highest user foirst
-		// ******************************************************************************************************************************* do tsomethiungn eher
+	console.log('Running highScoreUserListener()')
+	var highest = {
+		username: '',
+		score: 0,
+	};
+
+	if (object.val() == null) {
+		console.log('hecsbjvc');
+		return;
 	}
+
+	for (var i = 1; i < Number(Object.keys(object.val()).length) + 1; i++) {
+		console.log(i.toString())
+		if (highest['score'] < object.val()[i.toString()]['highScore']) {
+			highest['score'] = object.val()[i.toString()]['highScore'];
+			highest['username'] = object.val()[i.toString()]['username'];
+		}
+		console.log('looping')
+	}
+
+	highScoreUserListenerOutput.textContent = highest['username'] + ' has the high score with a score of ' + highest['score']
 }
