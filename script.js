@@ -265,13 +265,40 @@ function highScoreUserListener(object) {
 	}
 
 	for (var i = 1; i < Number(Object.keys(object.val()).length) + 1; i++) {
-		console.log(i.toString())
 		if (highest['score'] < object.val()[i.toString()]['highScore']) {
 			highest['score'] = object.val()[i.toString()]['highScore'];
 			highest['username'] = object.val()[i.toString()]['username'];
 		}
-		console.log('looping')
 	}
 
-	highScoreUserListenerOutput.textContent = highest['username'] + ' has the high score with a score of ' + highest['score']
+	if (highest['username'] != null) {
+		highScoreUserListenerOutput.textContent = highest['username'] + ' has the high score with a score of ' + highest['score'];
+	} else {
+		return;
+	}
+	
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function displayAllScores() {
+	firebase.database().ref('/highScoreTable/').child("usersByID").orderByChild('currentScore').limitToLast(3).once('value', displayScore);
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function displayScore(user) {
+	user.forEach(showOneScore);
+}
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function showOneScore(user) {
+	console.log('user ' + user.val()['username'] + 'has a score of ' + user.val()['currentScore']);
 }
