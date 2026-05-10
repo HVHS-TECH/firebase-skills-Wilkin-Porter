@@ -302,3 +302,11 @@ function displayScore(user) {
 function showOneScore(user) {
 	console.log('user ' + user.val()['username'] + 'has a score of ' + user.val()['currentScore']);
 }
+
+
+/**************************************************************/
+// 
+/**************************************************************/
+function login() {
+	fb_Global_loginListener();
+}

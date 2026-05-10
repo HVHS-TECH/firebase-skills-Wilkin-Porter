@@ -2,57 +2,58 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Firebase Basics</title>
-  <link rel="icon" type="image/x-icon" href="assets/images/dtec_favicon.png">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Firebase Basics</title>
+	<link rel="icon" type="image/x-icon" href="assets/images/dtec_favicon.png">
 
-  <link href="style.css" rel="stylesheet" type="text/css" />
+	<link href="style.css" rel="stylesheet" type="text/css" />
 
-  <!-- firebase start ****************************************-->
-  <!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
-  <!-- Add Firebase products that you want to use -->
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
-  <!-- firebase end ******************************************-->
-  <script src="fb_setup.js"></script>
-  <script src="fb_io.js"></script>
+	<!-- firebase start ****************************************-->
+	<!-- Firebase App (core Firebase SDK) is always required & must be listed 1st -->
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+	<!-- firebase end ******************************************-->
+	<script src="fb_setup.js"></script>
+	<script src="fb_io.js"></script>
 
 </head>
 
 <body>
 
-  <a href="about.html">Read me first</a>
+	<a href="about.html">Read me first</a>
 
-  All of the output from firebase goes to the console, open it up now (ctrl - shift - i)
+	All of the output from firebase goes to the console, open it up now (ctrl - shift - i)
 
-  <h2>Hello world - a minimal write</h2>
-  <p>This button overwrites your entire database with the key/value pair Message : "Hello World" using the <a
-      href="https://firebase.google.com/docs/database/web/read-and-write#basic_write">set()</a> operation. Look in
-    firebase to see the effect.</p>
-  <p> Task 1: change the message in fb_helloWorld() to "Kia ora te ao"</p>
-  <p> Task 2: create another button that changes the message to "Goodbye/ka kite āno"</p>
-  <button onclick="helloWorld()">Hello world</button>
-  <button onclick="goodbyeWorld()">Goodbye world</button>
-  <button onclick="readMessage()">Read Database Message</button>
-  <button onclick="readMessageSafe()">Safe Read Database Message</button>
-  <button onclick="toggleReadListener()">Toggle Automatic Message Updating</button><br><br>
-  <button onclick="createHighScoreTable()">Create an example high score table with 4 users</button>
-  <button onclick="addUserToHighScoreTable()">Add an example user to the table</button>
-  <button onclick="readHighScoreTable(5)">Read high score of user 5</button><br><br>
-  <button onclick="displayAllScores()">Display the scores of the top 3 users</button>
+	<h2>Hello world - a minimal write</h2>
+	<p>This button overwrites your entire database with the key/value pair Message : "Hello World" using the <a
+			href="https://firebase.google.com/docs/database/web/read-and-write#basic_write">set()</a> operation. Look in
+		firebase to see the effect.</p>
+	<p> Task 1: change the message in fb_helloWorld() to "Kia ora te ao"</p>
+	<p> Task 2: create another button that changes the message to "Goodbye/ka kite āno"</p>
+	<button onclick="helloWorld()">Hello world</button>
+	<button onclick="goodbyeWorld()">Goodbye world</button>
+	<button onclick="readMessage()">Read Database Message</button>
+	<button onclick="readMessageSafe()">Safe Read Database Message</button>
+	<button onclick="toggleReadListener()">Toggle Automatic Message Updating</button><br><br>
+	<button onclick="createHighScoreTable()">Create an example high score table with 4 users</button>
+	<button onclick="addUserToHighScoreTable()">Add an example user to the table</button>
+	<button onclick="readHighScoreTable(5)">Read high score of user 5</button><br><br>
+	<button onclick="displayAllScores()">Display the scores of the top 3 users</button><br><br>
+	<button onclick="login()">Log in with Google</button>
 
-  <p id="readListenerOutput"></p>
+	<p id="readListenerOutput"></p>
 
-  <p id="highScoreUserListenerOutput"></p>
+	<p id="highScoreUserListenerOutput"></p>
 
-  <h2>Output</h2>
-  <div id="databaseOutput"></div>
+	<h2>Output</h2>
+	<div id="databaseOutput"></div>
 
-  <script src="script.js" onload="initialise()"></script>
-
+	<script src="fb_io.js"></script>
+	<script src="script.js" onload="initialise()"></script>
 </body>
 
 </html>
