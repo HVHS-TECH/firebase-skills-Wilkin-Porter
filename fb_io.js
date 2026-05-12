@@ -7,8 +7,6 @@
  **************************************************************
  **************************************************************/
 
-//let fb_GLOBAL_user;
-
 function fb_Global_loginListener() {
 	console.log('Running fb_GLOBAL_loginListener');
 	authenticationListener = firebase.auth().onAuthStateChanged(fb_GLOBAL_checkLoginState)
@@ -18,15 +16,23 @@ function fb_GLOBAL_checkLoginState(user) {
 	
 	if (user) {
 		console.log('The user is already logged in, skipping login process.');
-		console.log('user details:');
-		console.log(user);
 	} else {
 		console.log('The user is not already logged in, starting login process.');
 		fb_GLOBAL_popupLogin();
-		console.log('user details:');
-		console.log(user);
 	}
 
+	console.log('user details:');
+	console.log(user);
+	firebase.database().ref('/').update(
+		{
+			userData: {
+				[user['l']]: {
+					userName: user['displayName'],
+					email: user['email'],
+					profileURL: user['photoURL']
+				}
+			}
+		});
 }
 
 function fb_GLOBAL_popupLogin() {
@@ -37,5 +43,4 @@ function fb_GLOBAL_popupLogin() {
 		fb_GLOBAL_user = result.user;
 		console.log('User successfully logged in.')
 	});
-	
 }

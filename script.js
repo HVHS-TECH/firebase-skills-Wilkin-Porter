@@ -202,15 +202,15 @@ function checkTableLength(object) {
 /**************************************************************/
 function writeUserToTable(length) {
 	var usernameToAdd = prompt("Enter player name to add");
-	if (usernameToAdd == null) {
+	if (usernameToAdd == null || usernameToAdd == "") {
 		return;
 	}
 	var currentScoreToAdd = prompt("Enter player's current score");
-	if (currentScoreToAdd == null) {
+	if (currentScoreToAdd == null || currentScoreToAdd == "") {
 		return;
 	}
 	var highScoreToAdd = prompt("Enter player's high score");
-	if (highScoreToAdd == null) {
+	if (highScoreToAdd == null || highScoreToAdd == "") {
 		return;
 	}
 
